@@ -160,6 +160,16 @@
     background-clip: text;
   }
 
+  .tokens {
+    color: var(--muted);
+    font-size: 0.7rem;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .tokens.visible { opacity: 1; }
+
   .thinking {
     color: var(--muted);
     font-size: 1.1rem;
@@ -259,10 +269,14 @@
       else if (roll < 0.95) { result = 'Drums'; cls = 'drums'; }
       else { result = 'Golf & Drums'; cls = 'both'; }
 
-      output.innerHTML = `<div class="answer ${cls}">${result}</div>`;
+      output.innerHTML = `<div class="answer ${cls}">${result}</div><div class="tokens" id="tkn"></div>`;
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           output.querySelector('.answer').classList.add('visible');
+          const tkn = document.getElementById('tkn');
+          const absurd = Math.floor(Math.random() * 9_999_999_999) + 1_000_000;
+          tkn.textContent = `${absurd.toLocaleString()} tokens used`;
+          tkn.classList.add('visible');
         });
       });
 
